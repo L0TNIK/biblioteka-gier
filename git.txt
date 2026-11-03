@@ -1,0 +1,5 @@
+1. na poczatku musisz zrobic git pull zeby bylo nowe
+2. robisz swoje gowno(pozniej ogarniemy branche)
+3. git add .
+4. git commit -m "wiadomosc"
+3.git push origin main lub git push costam jak ogarniemy branche
