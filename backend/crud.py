@@ -1,9 +1,10 @@
+#funkcje ktore dodam pozniej do endpointow (sluza one do gadania z baza danych)
 import models
 
 def GetGames(db):
     return db.query(models.Game).all()
 
-def GetGame(db):
+def GetGame(db,gameId):
     return db.query(models.Game).filter(models.Game.id == gameId).first()
 
 def CreateGame(db, game):

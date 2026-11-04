@@ -1,3 +1,4 @@
+#jak dane maja byc formatowane
 from pydantic import BaseModel, ConfigDict
 
 
