@@ -4,9 +4,9 @@ from pydantic import BaseModel, ConfigDict
 
 class GameCreate(BaseModel):
     tytul: str
-    platforma: str | None = None
     ocena: int | None = None
-    status: str = "do zagrania"
+    steam_appid: int | None = None
+    image: str | None = None
 
 class GameOut(GameCreate):
     id: int

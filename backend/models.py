@@ -7,6 +7,6 @@ class Game(Base):
 
     id = Column(Integer, primary_key=True)
     tytul = Column(String)
-    platforma = Column(String)
     ocena = Column(Integer)
-    status = Column(String)
+    steam_appid = Column(Integer)
+    image = Column(String)
