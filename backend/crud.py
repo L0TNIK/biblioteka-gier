@@ -40,3 +40,13 @@ def DeleteGame(db, GameId):
     db.delete(dbGame)
     db.commit()
     return True
+
+def GetGames(db, search=None, sort="asc"):
+    query = db.query(models.Game)
+    if search:
+        query = query.filter(models.Game.tytul.ilike(f"%{search}"))
+    if sort == "desc":
+        query = query.oder_by(models.Game.tytul.desc())
+    else:
+        query = query.order_by(models.Game.tytul.asc())
+    return query.all()
