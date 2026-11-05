@@ -1,0 +1,213 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #17191f;
+    font-family: Arial, sans-serif;
+    color: #d5dce5;
+}
+
+
+
+.app {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+
+
+.topbar {
+    min-height: 70px;
+    background-color: #17191f;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 25px;
+    gap: 15px;
+}
+
+.search-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    max-width: 600px;
+}
+
+.search-area select {
+    height: 42px;
+    padding: 0 10px;
+    background: #e5e5e5;
+    border: none;
+    border-radius: 4px;
+    color: #222;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.search-area input {
+    height: 42px;
+    flex: 1;
+    min-width: 0;
+    padding: 0 12px;
+    background: #e5e5e5;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    font-size: 15px;
+}
+
+.search-button {
+    width: 42px;
+    height: 42px;
+    background-image: url(wyszukiwanie.png);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    
+}
+
+.profile img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #454c56;
+}
+
+
+
+.games-container {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #29465d;
+    padding: 30px 6%;
+}
+
+.game-card {
+    display: flex;
+    width: 100%;
+    min-height: 105px;
+    margin-bottom: 20px;
+    background-color: #192a3a;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.game-card:hover {
+    background-color: #203449;
+}
+
+/* Miniaturka */
+
+.game-image {
+    width: 250px;
+    min-width: 250px;
+    min-height: 105px;
+    background-image: url(miniatura-gry.png);
+    background-position: center;
+    background-size: cover;
+}
+
+/* Informacje */
+
+.game-info {
+    flex: 1;
+    min-width: 0;
+    padding: 14px 16px;
+    overflow: hidden;
+}
+
+.game-info h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #e0e6ed;
+}
+
+.game-info p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #aab5c0;
+    overflow-wrap: anywhere;
+}
+
+/* Przyciski */
+
+.game-actions {
+    width: 115px;
+    min-width: 115px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 12px;
+}
+
+.game-actions button {
+    background: none;
+    border: none;
+    color: #cbd3dd;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.2s;
+}
+
+.game-actions button:hover {
+    color: #58bce8;
+}
+
+/* Dolny pasek */
+
+.bottom-bar {
+    min-height: 55px;
+    background-color: #17191f;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.add-game {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.add-game span {
+    font-size: 23px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.add-game:hover {
+    color: #58bce8;
+}
+
+/* Scrollbar */
+
+.games-container::-webkit-scrollbar {
+    width: 9px;
+}
+
+.games-container::-webkit-scrollbar-track {
+    background: #192a3a;
+}
+
+.games-container::-webkit-scrollbar-thumb {
+    background: #71899c;
+    border-radius: 5px;
+}
+
+
