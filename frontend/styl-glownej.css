@@ -112,7 +112,7 @@ body {
     width: 250px;
     min-width: 250px;
     min-height: 105px;
-    background-image: url(miniatura-gry.png);
+    background-image: url(zdjecia/miniatura-gry.png);
     background-position: center;
     background-size: cover;
 }
