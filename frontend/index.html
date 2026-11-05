@@ -1,11 +1,51 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Logowanie</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>warchlak</h1>
+
+    <main class="strona">
+
+        
+
+        <section class="panel">
+
+            <div class="formularz">
+
+                <h1>LOGOWANIE</h1>
+
+                <form>
+                    <label for="login">Nazwa Użytkownika</label>
+                    <input type="text" id="login" name="login">
+
+                    <label for="haslo">Hasło</label>
+                    <input type="password" id="haslo" name="haslo">
+
+                    <div class="zapamietaj">
+                        <input type="checkbox" id="zapamietaj">
+                        <label for="zapamietaj">zapamiętaj mnie</label>
+                    </div>
+
+                    <button type="submit">Zaloguj się</button>
+                </form>
+
+                <a href="#" class="odzyskaj">Nie pamiętasz hasła?</a>
+
+            </div>
+
+        </section>
+
+        <footer>
+            <p>Nie masz konta?</p>
+            <a href="#" class="rejestracja">Utwórz konto</a>
+        </footer>
+
+    </main>
+
 </body>
 </html>
