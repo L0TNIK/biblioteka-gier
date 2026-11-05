@@ -7,4 +7,3 @@
 7. ja sprawdzam i potem merguje 
 
 pozdro
-

@@ -1,3 +1,4 @@
+#jak schemat zwaliduje informacje to daje je do modelu
 from sqlalchemy import Column, Integer, String
 from database import Base
 
