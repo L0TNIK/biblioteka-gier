@@ -19,10 +19,6 @@ app.add_middleware(
 def aga():
     return {"wiadomosc": "aga"}
 
-@app.get("/gry", response_model=list[schemas.GameOut])
-def ListGames(db=Depends(get_db)):
-    return crud.GetGames(db)
-
 @app.get("/gry/{gameId}", response_model=schemas.GameOut)
 def ReadGame(gameId: int, db=Depends(get_db)):
     game = crud.GetGame(db, gameId)
@@ -57,3 +53,11 @@ def SteamSearch(term: str):
         return steam.SearchSteam(term)
     except Exception:
         raise HTTPException(status_code=502, detail="steam nie odpowiada")
+
+@app.get("/steam/details/{appId}")
+def steam_details(appId: int):
+    try:
+        return steam.GetSteamDetails(appId)
+    except Exception as e:
+        print("BLAD DETAILS:", repr(e))
+        raise HTTPException(status_code=502, detail=repr(e))
