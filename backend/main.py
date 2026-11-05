@@ -1,11 +1,19 @@
 #endpointy
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from database import engine, get_db
-import models, schemas, crud
+import models, schemas, crud, steam
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def aga():
@@ -42,3 +50,10 @@ def RemoveGame(gameId: int, db=Depends(get_db)):
 @app.get("/gry", response_model=list[schemas.GameOut])
 def ListGames(search: str | None = None, sort: str = "asc", db=Depends(get_db)):
     return crud.GetGames(db,search, sort)
+
+@app.get("/steam/search")
+def SteamSearch(term: str):
+    try:
+        return steam.SearchSteam(term)
+    except Exception:
+        raise HTTPException(status_code=502, detail="steam nie odpowiada")

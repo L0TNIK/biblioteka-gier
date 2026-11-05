@@ -10,9 +10,9 @@ def GetGame(db,gameId):
 def CreateGame(db, game):
     NewGame = models.Game(
     tytul=game.tytul,
-    platforma=game.platforma,
     ocena=game.ocena,
-    status=game.status,
+    steam_appid=game.steam_appid,
+    image=game.image,
     )
     db.add(NewGame)
     db.commit()
@@ -25,9 +25,7 @@ def UpdateGame(db, gameId, game):
         return None
 
     dbGame.tytul = game.tytul
-    dbGame.platforma = game.platforma
     dbGame.ocena = game.ocena
-    dbGame.status = game.status
 
     db.commit()
     db.refresh(dbGame)
