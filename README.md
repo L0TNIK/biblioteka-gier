@@ -1,4 +1,4 @@
-#Ludoteka
+# Ludoteka
 
 Aplikacja webowa umożliwiająca tworzenie własnej biblioteki gier, sprawdzanie ocen ze steama, metacritic oraz ich ocenianie. Użytkownicy mogą dodawać gry do swojej kolekcji, przeglądać katalog.
 
