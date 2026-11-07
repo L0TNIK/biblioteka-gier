@@ -18,7 +18,12 @@ def SearchSteam(term):
         })
     return results
 
+_cache = {}
+
 def GetSteamDetails(appId):
+    def GetSteamDetaild(appId):
+        if appId in _cache:
+            return _cache[appId]
     resp = requests.get(
         "https://store.steampowered.com/api/appdetails",
         params={"appids": appId, "cc": "pl", "l": "polish"},
@@ -45,10 +50,13 @@ def GetSteamDetails(appId):
     except Exception as e:
         print("BLAD RECENZJI:", repr(e))
 
-    return {
+    wynik = {
         "opis": data.get("short_description"),
         "metacritic": data.get("metacritic", {}).get("score"),
         "steam_ocena": summary.get("review_score_desc"),
         "pozytywne": summary.get("total_positive"),
         "negatywne": summary.get("total_negative"),
     }
+    if summary:
+        _cache[appId] = wynik
+    return wynik
