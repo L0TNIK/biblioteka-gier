@@ -61,10 +61,26 @@ async function usunGre(id) {
     wczytajGry();
 }
 
+async function pobierzDaneZeSteama(appId) {
+    try {
+        const odpowiedz = await fetch(`${API}/steam/details/${appId}`);
+        
+        if (!odpowiedz.ok) {
+            throw new Error("Nie znaleziono gry o takim ID na Steam.");
+        }
+
+        const dane = await odpowiedz.json();
+        
+        console.log("Opis:", dane.opis);
+        console.log("Ocena Steam:", dane.steam_ocena);
+    } catch (blad) {
+        console.error("Błąd pobierania ze Steama:", blad);
+    }
+}
+
 przyciskSzukaj.addEventListener("click", wczytajGry);
 poleSzukaj.addEventListener("keydown", (e) => {
     if (e.key === "Enter") wczytajGry();
 });
-sortowanie.addEventListener("change", wczytajGry);
 
 wczytajGry();

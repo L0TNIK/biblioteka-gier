@@ -42,7 +42,7 @@ def DeleteGame(db, GameId):
 def GetGames(db, search=None, sort="asc"):
     query = db.query(models.Game)
     if search:
-        query = query.filter(models.Game.tytul.ilike(f"%{search}"))
+        query = query.filter(models.Game.tytul.ilike(f"{search}%"))
     if sort == "desc":
         query = query.order_by(models.Game.tytul.desc())
     else:
