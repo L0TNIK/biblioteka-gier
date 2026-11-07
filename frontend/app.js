@@ -84,3 +84,35 @@ poleSzukaj.addEventListener("keydown", (e) => {
 });
 
 wczytajGry();
+
+//----------------------------------------------------------------------------
+
+const openButton = document.getElementById("open-add-game");
+const modal = document.getElementById("add-game-modal");
+const confirmButton = document.getElementById("confirm-add-game");
+const gameInput = document.getElementById("game-name");
+
+openButton.addEventListener("click", () => {
+    modal.style.display = "flex";
+});
+
+modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+confirmButton.addEventListener("click", () => {
+    const nazwaGry = gameInput.value.trim();
+
+    if (nazwaGry === "") {
+        alert("Brak wyników");
+        return;
+    }
+
+    console.log("Dodawana gra:", nazwaGry);
+
+
+    modal.style.display = "none";
+    gameInput.value = "";
+});

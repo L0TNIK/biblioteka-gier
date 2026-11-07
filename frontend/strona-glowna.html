@@ -32,11 +32,29 @@
         <main class="games-container" id="games-list">
 
         </main>
-        <footer class="bottom-bar">
-            <button class="add-game">
+                <footer class="bottom-bar">
+            <button class="add-game" id="open-add-game">
                 <span>⊕</span> Dodaj grę
             </button>
         </footer>
+
+        <div id="add-game-modal" class="modal">
+            <div class="modal-content">
+
+                <h2>Nazwa gry</h2>
+
+                <input
+                    type="text"
+                    id="game-name"
+                    placeholder="Wpisz nazwę gry"
+                >
+
+                <button id="confirm-add-game">Dodaj grę</button>
+
+            </div>
+        </div>
+
+    </div>
     </div>
 </body>
 </html>
