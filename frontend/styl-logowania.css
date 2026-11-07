@@ -5,27 +5,25 @@
 }
 
 body {
-    background-color: #1e1e1e;
+    min-height: 100vh;
     font-family: Arial, sans-serif;
     color: white;
+    background-image: url("./zdjecia/tlo-do-rejestracji.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .strona {
-    width: 85%;
-    max-width: 1400px;
-    margin: 30px auto;
-}
-
-.nazwa-strony {
-    color: #777;
-    font-size: 16px;
-    margin-bottom: 12px;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .panel {
-    background-image: url(zdjecia/tlo-do-logowania.png);
-    background-size: 97%;
-    min-height: 650px;
+    
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,23 +69,6 @@ form input[type="password"] {
     font-size: 14px;
 }
 
-.zapamietaj {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: -5px;
-}
-
-.zapamietaj input {
-    width: 14px;
-    height: 14px;
-}
-
-.zapamietaj label {
-    font-size: 12px;
-    margin: 0;
-}
-
 button {
     display: block;
     width: 85%;
@@ -106,16 +87,9 @@ button:hover,
     background-color: #3699ce;
 }
 
-.odzyskaj {
-    display: block;
-    margin-top: 22px;
-    color: #70b9ed;
-    font-size: 12px;
-    text-decoration: none;
-}
-
 footer {
     background-color: #1a2b3c;
+    width: 100%;
     min-height: 85px;
     display: flex;
     flex-direction: column;
@@ -127,6 +101,13 @@ footer {
 footer p {
     font-size: 13px;
     font-weight: bold;
+}
+.odzyskaj{
+    display: block;
+    margin-top: 18px;
+    color: #58b5e5;
+    text-decoration: none;
+    font-size: 12px;
 }
 
 .rejestracja {

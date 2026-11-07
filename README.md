@@ -1,6 +1,6 @@
 # Ludoteka
 
-Aplikacja webowa umożliwiająca tworzenie własnej biblioteki gier, sprawdzanie ocen ze steama, metacritic oraz ich ocenianie. Użytkownicy mogą dodawać gry do swojej kolekcji, przeglądać katalog.
+Aplikacja webowa umożliwiająca tworzenie własnej biblioteki gier, sprawdzanie ocen ze steama, metacritic oraz ich ocenianie. Użytkownicy mogą dodawać gry do swojej kolekcji, przeglądać katalog oraz oceniać tytuły.
 
 ## [Backend](backend/README.md) - Python, FastAPI, PostgreSQL, SQLalchemy
 
