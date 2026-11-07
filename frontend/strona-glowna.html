@@ -38,23 +38,22 @@
             </button>
         </footer>
 
-        <div id="add-game-modal" class="modal">
+        <div id="add-game-modal" class="modal" hidden>
             <div class="modal-content">
-
                 <h2>Nazwa gry</h2>
 
-                <input
-                    type="text"
-                    id="game-name"
-                    placeholder="Wpisz nazwę gry"
-                >
+                <div class="modal-search">
+                    <input type="text" id="game-name" placeholder="Wpisz nazwę gry">
+                    <button id="search-steam">🔍</button>
+                </div>
+
+                <div id="steam-results"></div>
 
                 <button id="confirm-add-game">Dodaj grę</button>
-
+                <button id="cancel-add-game">Anuluj</button>
             </div>
         </div>
 
-    </div>
     </div>
 </body>
 </html>

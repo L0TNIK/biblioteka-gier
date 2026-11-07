@@ -276,3 +276,26 @@ body {
     cursor: pointer;
     border-radius: 3px;
 }
+
+.modal[hidden] {
+    display: none;
+}
+#steam-results {
+    max-height: 180px;
+    overflow-y: auto;
+}
+.wynik {
+    padding: 6px 8px;
+    cursor: pointer;
+}
+.wynik:hover,
+.wynik.wybrany {
+    background: #2a475e;
+}
+.modal-search {
+    display: flex;
+    gap: 8px;
+}
+.modal-search input {
+    flex: 1;
+}

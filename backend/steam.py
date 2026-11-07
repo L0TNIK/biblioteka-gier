@@ -13,7 +13,7 @@ def SearchSteam(term):
     for item in data.get("items", []):
         results.append({
             "steam_appid": item["id"],
-            "title": item["name"],
+            "tytul": item["name"],
             "image": item.get("tiny_image"),
         })
     return results
