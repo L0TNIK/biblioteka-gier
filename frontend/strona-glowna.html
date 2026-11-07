@@ -7,17 +7,14 @@
     <title>Biblioteka gier</title>
     <link rel="stylesheet" href="styl-glownej.css">
 </head>
+<script src="app.js" defer></script>
 <body>
-
-    <div class="app">
-
-        
+    <div class="app">  
         <header class="topbar">
-
             <div class="search-area">
                 <select id="sort">
-                    <option value="alphabet">alfabetycznie (A-Z)</option>
-                    <option value="reverse">alfabetycznie (Z-A)</option>
+                    <option value="asc">alfabetycznie (A-Z)</option>
+                    <option value="desc">alfabetycznie (Z-A)</option>
                 </select>
 
                 <input
@@ -26,101 +23,21 @@
                     placeholder="wyszukaj grę"
                 >
 
-                <button class="search-button"> </button>
+                <button class="search-button" id="search-button"> </button>
             </div>
 
             <div class="profile">
                 <img src="zdjecia/profilowe.png" alt="Profil użytkownika">
             </div>
-
         </header>
-
-        
         <main class="games-container" id="games-list">
 
-            <article class="game-card">
-                <div class="game-image"></div>
-
-                <div class="game-info">
-                    <div class="game-header">
-                        <h3>przygody agnieszki</h3>
-                    </div>
-        
-                    <p>Przygody opowiadają o tym jak nasza kochana aga się kurwi &lt;3</p>
-                </div>
-                <div class="game-actions">
-                    <span class="steam-review positive">Przytłaczająco pozytywne 👥</span>
-                    <button>Edytuj</button>
-                    <button>Usuń grę</button>
-                </div>
-            </article>
-
-            <article class="game-card">
-                <div class="game-image"></div>
-
-                <div class="game-info">
-                    <h3>przygody agnieszki</h3>
-                    <p></p>
-                </div>
-
-                <div class="game-actions">
-                    <button>Edytuj</button>
-                    <button>Usuń grę</button>
-                </div>
-            </article>
-
-            <article class="game-card">
-                <div class="game-image"></div>
-
-                <div class="game-info">
-                    <h3>przygody agnieszki</h3>
-                    <p></p>
-                </div>
-
-                <div class="game-actions">
-                    <button>Edytuj</button>
-                    <button>Usuń grę</button>
-                </div>
-            </article>
-
-            <article class="game-card">
-                <div class="game-image"></div>
-
-                <div class="game-info">
-                    <h3>przygody agnieszki</h3>
-                    <p></p>
-                </div>
-
-                <div class="game-actions">
-                    <button>Edytuj</button>
-                    <button>Usuń grę</button>
-                </div>
-            </article>
-
-            <article class="game-card">
-                <div class="game-image"></div>
-
-                <div class="game-info">
-                    <h3>przygody agnieszki</h3>
-                    <p></p>
-                </div>
-
-                <div class="game-actions">
-                    <button>Edytuj</button>
-                    <button>Usuń grę</button>
-                </div>
-            </article>
-
         </main>
-
-        
         <footer class="bottom-bar">
             <button class="add-game">
                 <span>⊕</span> Dodaj grę
             </button>
         </footer>
-
     </div>
-
 </body>
 </html>
