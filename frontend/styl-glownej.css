@@ -235,3 +235,44 @@ body {
 .review-icon {
     flex-shrink: 0;
 }
+
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    width: 250px;
+    padding: 25px;
+    background: #1c2c3d;
+    border-radius: 7px;
+    text-align: center;
+    color: white;
+}
+
+.modal-content h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.modal-content input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    margin-bottom: 15px;
+}
+
+.modal-content button {
+    background: #62bce9;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+}
