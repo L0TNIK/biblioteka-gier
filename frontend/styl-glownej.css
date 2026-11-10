@@ -318,3 +318,29 @@ body {
     justify-content: center;
 }
 
+#steam-results::-webkit-scrollbar {
+    width: 9px;
+}
+
+#steam-results::-webkit-scrollbar-track {
+    background: #192a3a;
+    border-radius: 5px;
+}
+
+#steam-results::-webkit-scrollbar-thumb {
+    background: #71899c;
+    border-radius: 5px;
+}
+
+#steam-results::-webkit-scrollbar-thumb:hover {
+    background: #58bce8;
+}
+
+.game-actions button:last-child:hover {
+    color: #ff4444;
+}
+
+#confirm-delete-game:hover {
+    background-color: #d93030;
+    color: white;
+}
