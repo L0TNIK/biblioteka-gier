@@ -115,6 +115,12 @@ async function szukajWSteamie() {
         const wyniki = await odp.json();
 
         wynikiSteam.innerHTML = "";
+
+        if (!wyniki || wyniki.length === 0) {
+            wynikiSteam.innerHTML = '<div class="no-results">Nie dodano gry</div>';
+            return;
+        }
+
         for (const gra of wyniki) {
             const wiersz = document.createElement("div");
             wiersz.className = "wynik";

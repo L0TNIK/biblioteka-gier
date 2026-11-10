@@ -278,12 +278,17 @@ body {
     border-radius: 3px;
 }
 
+.modal-content button:hover {
+    background-color: hsl(200, 75%, 50%);
+}
+
 .modal[hidden] {
     display: none;
 }
 #steam-results {
     max-height: 180px;
     overflow-y: auto;
+    margin-bottom: 15px;
 }
 .wynik {
     padding: 6px 8px;
@@ -298,5 +303,18 @@ body {
     gap: 8px;
 }
 .modal-search input {
-    flex: 1;
+    height: 38px;            /* Nadaj stałą wysokość inputowi */
+    padding: 0 10px;
+    margin-bottom: 15px;        /* Usuń stary margines, żeby flexbox dobrze wyrównał elementy */
+    box-sizing: border-box;  /* Zabezpieczenie przed doliczaniem paddingu do szerokości/wysokości */
 }
+
+#search-steam {
+    height: 38px;            /* Musi być dokładnie taka sama jak w input! */
+    padding: 0 12px;         /* Dopasuj padding boczny, żeby ikona była ładnie wyśrodkowana */
+    box-sizing: border-box;  /* Kluczowe: uwzględnia padding i ewentualne obramowanie w wysokości */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
