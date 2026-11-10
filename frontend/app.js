@@ -43,8 +43,16 @@ function stworzKarte(gra) {
 
     const akcje = document.createElement("div");
     akcje.className = "game-actions";
+
+    //-------------------------------------------------------------
+
     const edytuj = document.createElement("button");
     edytuj.textContent = "Edytuj";
+
+    edytuj.addEventListener("click", () => {
+    document.getElementById("edit-game-modal").style.display = "flex";
+    });
+    //------------------------------------------------------------
     const usun = document.createElement("button");
     usun.textContent = "Usuń grę";
     usun.addEventListener("click", () => usunGre(gra.id));
@@ -54,11 +62,12 @@ function stworzKarte(gra) {
     return karta;
 }
 
-async function usunGre(id) {
-    if (!confirm("Na pewno usunąć tę grę?"))
-        return;
-    await fetch(`${API}/gry/${id}`, { method: "DELETE" });
-    wczytajGry();
+let graDoUsuniecia = null;
+
+function usunGre(id) {
+    graDoUsuniecia = id;
+
+    document.getElementById("delete-game-modal").style.display = "flex";
 }
 
 przyciskSzukaj.addEventListener("click", wczytajGry);
@@ -165,6 +174,54 @@ poleNazwa.addEventListener("input", () => {
     wybranaGra = null;
 });
 document.getElementById("confirm-add-game").addEventListener("click", dodajGre);
+
+
+
+//-----------------------------------------------------------------------------------
+
+const editModal = document.getElementById("edit-game-modal");
+
+document.getElementById("cancel-edit-game").addEventListener("click", () => {
+    editModal.style.display = "none";
+});
+
+editModal.addEventListener("click", (e) => {
+    if (e.target === editModal) {
+        editModal.style.display = "none";
+    }
+});
+
+
+
+
+const deleteModal = document.getElementById("delete-game-modal");
+
+document.getElementById("cancel-delete-game").addEventListener("click", () => {
+    deleteModal.style.display = "none";
+    graDoUsuniecia = null;
+});
+
+document.getElementById("confirm-delete-game").addEventListener("click", async () => {
+    if (graDoUsuniecia === null) return;
+
+    await fetch(`${API}/gry/${graDoUsuniecia}`, {
+        method: "DELETE"
+    });
+
+    deleteModal.style.display = "none";
+    graDoUsuniecia = null;
+
+    wczytajGry();
+});
+
+deleteModal.addEventListener("click", (e) => {
+    if (e.target === deleteModal) {
+        deleteModal.style.display = "none";
+        graDoUsuniecia = null;
+    }
+});
+
+
 
 //----------------------------------------------------------------------------
 wczytajGry();

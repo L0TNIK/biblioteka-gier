@@ -335,3 +335,12 @@ body {
 #steam-results::-webkit-scrollbar-thumb:hover {
     background: #58bce8;
 }
+
+.game-actions button:last-child:hover {
+    color: #ff4444;
+}
+
+#confirm-delete-game:hover {
+    background-color: #d93030;
+    color: white;
+}
