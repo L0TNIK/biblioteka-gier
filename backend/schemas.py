@@ -1,5 +1,5 @@
 #jak dane maja byc formatowane
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class GameCreate(BaseModel):

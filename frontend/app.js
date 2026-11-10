@@ -4,6 +4,7 @@ const lista = document.getElementById("games-list");
 const poleSzukaj = document.getElementById("search");
 const przyciskSzukaj = document.getElementById("search-button");
 const sortowanie = document.getElementById("sort");
+const poleOcena = document.getElementById("game-rating");
 
 async function wczytajGry() {
     try {
@@ -23,6 +24,17 @@ async function wczytajGry() {
     }
 }
 
+async function wczytajOpis(appId, element) {
+    try {
+        const odp = await fetch(`${API}/steam/details/${appId}`);
+        if (!odp.ok) throw new Error("blad");
+        const dane = await odp.json();
+        element.textContent = dane.opis || "";
+    } catch (blad) {
+        console.error("Opis ze Steama:", blad);
+    }
+}
+
 function stworzKarte(gra) {
     const karta = document.createElement("article");
     karta.className = "game-card";
@@ -37,9 +49,21 @@ function stworzKarte(gra) {
 
     const info = document.createElement("div");
     info.className = "game-info";
+
     const tytul = document.createElement("h3");
-    tytul.textContent = gra.tytul;
-    info.appendChild(tytul);
+    const link = document.createElement("a");
+    link.href = `gra.html?id=${gra.id}`;
+    link.textContent = gra.tytul;
+    tytul.appendChild(link);
+
+    const opis = document.createElement("p");
+    opis.className = "game-description";
+
+    const ocena = document.createElement("p");
+    ocena.className = "game-rating";
+    ocena.textContent = gra.ocena ? `Moja ocena: ${gra.ocena}/10` : "Brak oceny";
+
+    info.append(tytul, opis, ocena);
 
     const akcje = document.createElement("div");
     akcje.className = "game-actions";
@@ -51,6 +75,10 @@ function stworzKarte(gra) {
     akcje.append(edytuj, usun);
 
     karta.append(obraz, info, akcje);
+
+    if (gra.steam_appid) {
+        wczytajOpis(gra.steam_appid, opis);
+    }
     return karta;
 }
 
@@ -90,6 +118,7 @@ let wybranaGra = null;   // gra wybrana ze Steama; null = własna gra
 
 document.getElementById("open-add-game").addEventListener("click", () => {
     poleNazwa.value = "";
+    poleOcena.value = "";
     wynikiSteam.innerHTML = "";
     wybranaGra = null;
     modalDodaj.style.display = "flex";
@@ -142,7 +171,16 @@ async function dodajGre() {
     const tytul = poleNazwa.value.trim();
     if (!tytul) return;
 
-    const dane = { tytul: tytul };
+    let ocena = null;
+    if (poleOcena.value.trim() !== "") {
+        ocena = Number(poleOcena.value);
+        if (!Number.isInteger(ocena) || ocena < 1 || ocena > 10) {
+            alert("Ocena musi być liczbą całkowitą od 1 do 10.");
+            return;
+        }
+    }
+
+    const dane = { tytul: tytul, ocena: ocena };
     if (wybranaGra) {
         dane.steam_appid = wybranaGra.steam_appid;
         dane.image = wybranaGra.image;

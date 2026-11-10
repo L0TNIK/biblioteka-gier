@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteka gier</title>
+    <link rel="stylesheet" href="styl-gry.css">
+    <script src="gra.js" defer></script>
+</head>
+<body>
+    <div class="strona-gry">
+        <a href="strona-glowna.html" class="powrot">← Wróć do biblioteki</a>
+
+        <div class="gra-naglowek">
+            <img id="okladka" class="gra-okladka" alt="">
+            <div class="gra-dane">
+                <h1 id="tytul"></h1>
+                <p id="opis"></p>
+                <p id="moja-ocena"></p>
+            </div>
+        </div>
+
+        <section class="oceny">
+            <div class="ocena-kafelek">
+                <span class="ocena-etykieta">Metacritic</span>
+                <span class="ocena-wartosc" id="metacritic">–</span>
+            </div>
+            <div class="ocena-kafelek">
+                <span class="ocena-etykieta">Steam</span>
+                <span class="ocena-wartosc" id="steam-ocena">–</span>
+                <span class="ocena-podpis" id="steam-liczby"></span>
+            </div>
+            <div class="ocena-kafelek">
+                <span class="ocena-etykieta">Użytkownicy biblioteki</span>
+                <span class="ocena-wartosc" id="srednia">–</span>
+                <span class="ocena-podpis">wkrótce</span>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

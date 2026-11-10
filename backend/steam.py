@@ -1,5 +1,7 @@
 import requests, json
 
+_cache = {}
+
 def SearchSteam(term):
     responce = requests.get(
         "https://store.steampowered.com/api/storesearch/",
@@ -18,12 +20,10 @@ def SearchSteam(term):
         })
     return results
 
-_cache = {}
-
 def GetSteamDetails(appId):
-    def GetSteamDetaild(appId):
-        if appId in _cache:
-            return _cache[appId]
+    if appId in _cache:
+        return _cache[appId]
+    
     resp = requests.get(
         "https://store.steampowered.com/api/appdetails",
         params={"appids": appId, "cc": "pl", "l": "polish"},
