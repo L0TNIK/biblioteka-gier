@@ -1,10 +1,51 @@
+// ============================================================
+// USTAWIENIA I ELEMENTY STRONY
+// ============================================================
 const API = "http://127.0.0.1:8000";
 
+// lista gier, wyszukiwanie i sortowanie
 const lista = document.getElementById("games-list");
 const poleSzukaj = document.getElementById("search");
 const przyciskSzukaj = document.getElementById("search-button");
 const sortowanie = document.getElementById("sort");
 
+// okienko dodawania
+const modalDodaj = document.getElementById("add-game-modal");
+const poleNazwa = document.getElementById("game-name");
+const wynikiSteam = document.getElementById("steam-results");
+const poleOcena = document.getElementById("game-rating");
+
+// okienko edycji
+const modalEdytuj = document.getElementById("edit-game-modal");
+
+// okienko usuwania
+const modalUsun = document.getElementById("delete-game-modal");
+
+// ============================================================
+// POMOCNICZE: OKIENKA (MODALE)
+// ============================================================
+function pokazModal(modal) {
+    modal.style.display = "flex";
+}
+
+function ukryjModal(modal) {
+    modal.style.display = "none";
+}
+
+// Kliknięcie w ciemne tło (poza okienkiem) zamyka okienko.
+function zamykajPrzyKlikniecieWTlo(modal, poZamknieciu) {
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            ukryjModal(modal);
+            if (poZamknieciu) poZamknieciu();
+        }
+    });
+}
+
+
+// ============================================================
+// LISTA GIER
+// ============================================================
 async function wczytajGry() {
     try {
         const odpowiedz = await fetch(
@@ -39,78 +80,93 @@ function stworzKarte(gra) {
     info.className = "game-info";
     const tytul = document.createElement("h3");
     tytul.textContent = gra.tytul;
-    info.appendChild(tytul);
+    const opis = document.createElement("p");
+    opis.className = "game-description";
+    const mojaOcena = document.createElement("p");
+    mojaOcena.className = "game-rating";
+    mojaOcena.textContent = gra.ocena ? `Moja ocena: ${gra.ocena}/10` : "Brak oceny";
+    info.append(tytul, opis, mojaOcena);
 
     const akcje = document.createElement("div");
     akcje.className = "game-actions";
-
-    //-------------------------------------------------------------
-
     const edytuj = document.createElement("button");
     edytuj.textContent = "Edytuj";
-
-    edytuj.addEventListener("click", () => {
-    document.getElementById("edit-game-modal").style.display = "flex";
-    });
-    //------------------------------------------------------------
     const usun = document.createElement("button");
     usun.textContent = "Usuń grę";
     usun.addEventListener("click", () => usunGre(gra.id));
     akcje.append(edytuj, usun);
 
     karta.append(obraz, info, akcje);
+
+    if (gra.steam_appid) {
+        wczytajOpis(gra.steam_appid, opis);
+    }
     return karta;
 }
 
-let graDoUsuniecia = null;
-
-function usunGre(id) {
-    graDoUsuniecia = id;
-
-    document.getElementById("delete-game-modal").style.display = "flex";
+async function wczytajOpis(appId, opisEl) {
+    try {
+        const odp = await fetch(`${API}/steam/details/${appId}`);
+        if (!odp.ok) throw new Error("blad");
+        const dane = await odp.json();
+        opisEl.textContent = dane.opis || "";
+    } catch (blad) {
+        console.error("Opis ze Steama:", blad);
+    }
 }
 
+// Opis i oceny ze Steama dopisują się do karty, gdy tylko backend odpowie.
+async function wczytajSzczegoly(appId, opisEl, steamEl, metaEl) {
+    try {
+        const odp = await fetch(`${API}/steam/details/${appId}`);
+        if (!odp.ok) throw new Error("blad");
+        const dane = await odp.json();
+
+        opisEl.textContent = dane.opis || "";
+
+        if (dane.steam_ocena) {
+            steamEl.textContent = `Steam: ${TLUMACZENIA[dane.steam_ocena] || dane.steam_ocena}`;
+            if (dane.steam_ocena.includes("Positive")) steamEl.classList.add("positive");
+            else if (dane.steam_ocena.includes("Negative")) steamEl.classList.add("negative");
+            else steamEl.classList.add("mixed");
+        }
+        if (dane.metacritic) {
+            metaEl.textContent = `Metacritic: ${dane.metacritic}`;
+        }
+    } catch (blad) {
+        console.error("Szczegóły ze Steama:", blad);
+    }
+}
+
+
+// ============================================================
+// WYSZUKIWANIE I SORTOWANIE
+// ============================================================
 przyciskSzukaj.addEventListener("click", wczytajGry);
 poleSzukaj.addEventListener("keydown", (e) => {
     if (e.key === "Enter") wczytajGry();
 });
 sortowanie.addEventListener("change", wczytajGry);
 
-const TLUMACZENIA = {
-    "Overwhelmingly Positive": "Przytłaczająco pozytywne",
-    "Very Positive": "Bardzo pozytywne",
-    "Positive": "Pozytywne",
-    "Mostly Positive": "W większości pozytywne",
-    "Mixed": "Mieszane",
-    "Mostly Negative": "W większości negatywne",
-    "Negative": "Negatywne",
-    "Very Negative": "Bardzo negatywne",
-    "Overwhelmingly Negative": "Przytłaczająco negatywne",
-};
 
-//----------------------------------------------------------------------------
+// ============================================================
 // DODAWANIE GIER
-//----------------------------------------------------------------------------
-const modalDodaj = document.getElementById("add-game-modal");
-const poleNazwa = document.getElementById("game-name");
-const wynikiSteam = document.getElementById("steam-results");
-
+// ============================================================
 let wybranaGra = null;   // gra wybrana ze Steama; null = własna gra
 
 document.getElementById("open-add-game").addEventListener("click", () => {
     poleNazwa.value = "";
+    poleOcena.value = "";
     wynikiSteam.innerHTML = "";
     wybranaGra = null;
-    modalDodaj.style.display = "flex";
+    pokazModal(modalDodaj);
 });
 
 document.getElementById("cancel-add-game").addEventListener("click", () => {
-    modalDodaj.style.display = "none";
+    ukryjModal(modalDodaj);
 });
 
-modalDodaj.addEventListener("click", (e) => {
-    if (e.target === modalDodaj) modalDodaj.style.display = "none";
-});
+zamykajPrzyKlikniecieWTlo(modalDodaj);
 
 async function szukajWSteamie() {
     const fraza = poleNazwa.value.trim();
@@ -151,7 +207,16 @@ async function dodajGre() {
     const tytul = poleNazwa.value.trim();
     if (!tytul) return;
 
-    const dane = { tytul: tytul };
+    let ocena = null;
+    if (poleOcena.value.trim() !== "") {
+        ocena = Number(poleOcena.value);
+        if (!Number.isInteger(ocena) || ocena < 1 || ocena > 10) {
+            alert("Ocena musi być liczbą całkowitą od 1 do 10.");
+            return;
+        }
+    }
+
+    const dane = { tytul: tytul, ocena: ocena };
     if (wybranaGra) {
         dane.steam_appid = wybranaGra.steam_appid;
         dane.image = wybranaGra.image;
@@ -162,7 +227,7 @@ async function dodajGre() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dane),
     });
-    modalDodaj.style.display = "none";
+    ukryjModal(modalDodaj);
     wczytajGry();
 }
 
@@ -176,52 +241,49 @@ poleNazwa.addEventListener("input", () => {
 document.getElementById("confirm-add-game").addEventListener("click", dodajGre);
 
 
-
-//-----------------------------------------------------------------------------------
-
-const editModal = document.getElementById("edit-game-modal");
-
+// ============================================================
+// EDYCJA GIER
+// ============================================================
+// TODO: przycisk "Edytuj" na karcie jeszcze nic nie robi.
+// Na razie działa tylko zamykanie okienka.
 document.getElementById("cancel-edit-game").addEventListener("click", () => {
-    editModal.style.display = "none";
+    ukryjModal(modalEdytuj);
 });
 
-editModal.addEventListener("click", (e) => {
-    if (e.target === editModal) {
-        editModal.style.display = "none";
-    }
-});
+zamykajPrzyKlikniecieWTlo(modalEdytuj);
 
 
+// ============================================================
+// USUWANIE GIER
+// ============================================================
+let graDoUsuniecia = null;
 
-
-const deleteModal = document.getElementById("delete-game-modal");
+function usunGre(id) {
+    graDoUsuniecia = id;
+    pokazModal(modalUsun);
+}
 
 document.getElementById("cancel-delete-game").addEventListener("click", () => {
-    deleteModal.style.display = "none";
+    ukryjModal(modalUsun);
     graDoUsuniecia = null;
 });
 
 document.getElementById("confirm-delete-game").addEventListener("click", async () => {
     if (graDoUsuniecia === null) return;
 
-    await fetch(`${API}/gry/${graDoUsuniecia}`, {
-        method: "DELETE"
-    });
+    await fetch(`${API}/gry/${graDoUsuniecia}`, { method: "DELETE" });
 
-    deleteModal.style.display = "none";
+    ukryjModal(modalUsun);
     graDoUsuniecia = null;
-
     wczytajGry();
 });
 
-deleteModal.addEventListener("click", (e) => {
-    if (e.target === deleteModal) {
-        deleteModal.style.display = "none";
-        graDoUsuniecia = null;
-    }
+zamykajPrzyKlikniecieWTlo(modalUsun, () => {
+    graDoUsuniecia = null;
 });
 
 
-
-//----------------------------------------------------------------------------
+// ============================================================
+// START
+// ============================================================
 wczytajGry();

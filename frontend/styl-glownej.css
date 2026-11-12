@@ -45,10 +45,10 @@ body {
 .search-area select {
     height: 42px;
     padding: 0 10px;
-    background: #e5e5e5;
+    background: #2A475E;
     border: none;
     border-radius: 4px;
-    color: #222;
+    color: #C7D5E0;
     font-size: 14px;
     cursor: pointer;
 }
@@ -58,21 +58,38 @@ body {
     flex: 1;
     min-width: 0;
     padding: 0 12px;
-    background: #e5e5e5;
+    background: #2A475E;
+    color: #C7D5E0;
     border: none;
     border-radius: 4px;
     outline: none;
     font-size: 15px;
+    -webkit-text-fill-color: #C7D5E0;
+    opacity: 1;
+}
+
+.search-area input:-webkit-autofill,
+.search-area input:-webkit-autofill:hover, 
+.search-area input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #2A475E inset !important;
+    -webkit-text-fill-color: #C7D5E0 !important;
+    caret-color: #C7D5E0 !important;
 }
 
 .search-button {
     width: 42px;
     height: 42px;
-    background-image: url(wyszukiwanie.png);
+    background-image: url(zdjecia/wyszukiwanie.png);
+    background-color: #62bce9;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    
+    background-size: cover;
+    background-position: center;
+}
+
+.search-button:hover{
+    background-color: hsl(200, 75%, 50%);
 }
 
 .profile img {
@@ -100,6 +117,7 @@ body {
     background-color: #192a3a;
     border-radius: 5px;
     overflow: hidden;
+    box-shadow: 0 2px 2px black;
 }
 
 .game-card:hover {
@@ -126,12 +144,6 @@ body {
     overflow: hidden;
 }
 
-.game-info h3 {
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 10px;
-    color: #e0e6ed;
-}
 
 .game-info p {
     font-size: 13px;
@@ -249,7 +261,7 @@ body {
 }
 
 .modal-content {
-    width: 250px;
+    width: 350px;
     padding: 25px;
     background: #1c2c3d;
     border-radius: 7px;
@@ -300,7 +312,7 @@ body {
 }
 .modal-search {
     display: flex;
-    gap: 8px;
+    gap: 2px;
 }
 .modal-search input {
     height: 38px;            /* Nadaj stałą wysokość inputowi */
@@ -344,3 +356,28 @@ body {
     background-color: #d93030;
     color: white;
 }
+
+.game-description {
+    margin: 6px 0;
+    font-size: 14px;
+    opacity: 0.85;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.game-rating {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.7;
+}
+
+.steam-review,
+.metacritic-review {
+    font-size: 13px;
+}
+.steam-review.positive { color: #66c0f4; }
+.steam-review.mixed { color: #b9a074; }
+.steam-review.negative { color: #a74b25; }
