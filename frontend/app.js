@@ -1,3 +1,4 @@
+
 // ============================================================
 // USTAWIENIA I ELEMENTY STRONY
 // ============================================================
@@ -14,9 +15,11 @@ const modalDodaj = document.getElementById("add-game-modal");
 const poleNazwa = document.getElementById("game-name");
 const wynikiSteam = document.getElementById("steam-results");
 const poleOcena = document.getElementById("game-rating");
+const poleGatunek = document.getElementById("game-genre");
 
 // okienko edycji
 const modalEdytuj = document.getElementById("edit-game-modal");
+const poleEdytujGatunek = document.getElementById("edit-game-genre");
 
 // okienko usuwania
 const modalUsun = document.getElementById("delete-game-modal");
@@ -85,12 +88,19 @@ function stworzKarte(gra) {
     const mojaOcena = document.createElement("p");
     mojaOcena.className = "game-rating";
     mojaOcena.textContent = gra.ocena ? `Moja ocena: ${gra.ocena}/10` : "Brak oceny";
-    info.append(tytul, opis, mojaOcena);
+
+    const gatunek = document.createElement("p");
+    gatunek.className = "game-genre";
+    gatunek.textContent = gra.gatunek || "Brak gatunku";
+
+    info.append(tytul, opis, mojaOcena, gatunek);
 
     const akcje = document.createElement("div");
     akcje.className = "game-actions";
     const edytuj = document.createElement("button");
     edytuj.textContent = "Edytuj";
+    edytuj.addEventListener("click", () => edytujGre(gra));
+
     const usun = document.createElement("button");
     usun.textContent = "Usuń grę";
     usun.addEventListener("click", () => usunGre(gra.id));
@@ -157,6 +167,7 @@ let wybranaGra = null;   // gra wybrana ze Steama; null = własna gra
 document.getElementById("open-add-game").addEventListener("click", () => {
     poleNazwa.value = "";
     poleOcena.value = "";
+    poleGatunek.value = "";
     wynikiSteam.innerHTML = "";
     wybranaGra = null;
     pokazModal(modalDodaj);
@@ -216,7 +227,12 @@ async function dodajGre() {
         }
     }
 
-    const dane = { tytul: tytul, ocena: ocena };
+    const dane = {
+        tytul: tytul,
+        ocena: ocena,
+        gatunek: poleGatunek.value
+    };
+
     if (wybranaGra) {
         dane.steam_appid = wybranaGra.steam_appid;
         dane.image = wybranaGra.image;
@@ -244,13 +260,52 @@ document.getElementById("confirm-add-game").addEventListener("click", dodajGre);
 // ============================================================
 // EDYCJA GIER
 // ============================================================
-// TODO: przycisk "Edytuj" na karcie jeszcze nic nie robi.
-// Na razie działa tylko zamykanie okienka.
+let graDoEdycji = null;
+
+function edytujGre(gra) {
+    graDoEdycji = gra;
+    poleEdytujGatunek.value = gra.gatunek || "";
+    pokazModal(modalEdytuj);
+}
+
+async function zapiszEdycje() {
+    if (graDoEdycji === null) return;
+
+    const dane = {
+        gatunek: poleEdytujGatunek.value
+    };
+
+    try {
+        const odp = await fetch(`${API}/gry/${graDoEdycji.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dane)
+        });
+
+        if (!odp.ok) throw new Error("Nie udało się edytować gry");
+
+        ukryjModal(modalEdytuj);
+        graDoEdycji = null;
+        wczytajGry();
+
+    } catch (blad) {
+        console.error(blad);
+        alert("Nie udało się zapisać zmian.");
+    }
+}
+
 document.getElementById("cancel-edit-game").addEventListener("click", () => {
     ukryjModal(modalEdytuj);
+    graDoEdycji = null;
 });
 
-zamykajPrzyKlikniecieWTlo(modalEdytuj);
+document.getElementById("confirm-edit-game").addEventListener("click", zapiszEdycje);
+
+zamykajPrzyKlikniecieWTlo(modalEdytuj, () => {
+    graDoEdycji = null;
+});
 
 
 // ============================================================

@@ -50,19 +50,53 @@
                 <div id="steam-results"></div>
                 <input type="number" id="game-rating" min="1" max="10" placeholder="Twoja ocena (1-10), opcjonalnie">
 
+                <select id="game-genre">
+                    <option value="">Wybierz gatunek</option>
+                    <option value="Akcja">Akcja</option>
+                    <option value="Przygodowe">Przygodowe</option>
+                    <option value="RPG">RPG</option>
+                    <option value="MMORPG">MMORPG</option>
+                    <option value="Soulslike">Soulslike</option>
+                    <option value="FPS">Strzelanki (FPS)</option>
+                    <option value="TPS">Strzelanki (TPS)</option>
+                    <option value="Strategie">Strategie</option>
+                    <option value="Symulacje">Symulacje</option>
+                    <option value="Wyścigowe">Wyścigowe</option>
+                    <option value="Sportowe">Sportowe</option>
+                    <option value="Horror">Horror</option>
+                </select>
+
                 <button id="confirm-add-game">Dodaj grę</button>
                 <button id="cancel-add-game">Anuluj</button>
             </div>
         </div>
 
             <div id="edit-game-modal" class="modal" hidden>
-                <div class="modal-content">
-                    <h2>Edytuj grę</h2>
+    <div class="modal-content">
+        <h2>Edytuj grę</h2>
 
+        <label for="edit-game-genre">Gatunek gry:</label>
 
-                    <button id="cancel-edit-game">Anuluj</button>
-                </div>
-            </div>
+        <select id="edit-game-genre">
+            <option value="">Brak gatunku</option>
+            <option value="Akcja">Akcja</option>
+            <option value="Przygodowe">Przygodowe</option>
+            <option value="RPG">RPG</option>
+            <option value="MMORPG">MMORPG</option>
+            <option value="Soulslike">Soulslike</option>
+            <option value="FPS">Strzelanki (FPS)</option>
+            <option value="TPS">Strzelanki (TPS)</option>
+            <option value="Strategie">Strategie</option>
+            <option value="Symulacje">Symulacje</option>
+            <option value="Wyścigowe">Wyścigowe</option>
+            <option value="Sportowe">Sportowe</option>
+            <option value="Horror">Horror</option>
+        </select>
+
+        <button id="confirm-edit-game">Zapisz zmiany</button>
+        <button id="cancel-edit-game">Anuluj</button>
+    </div>
+</div>
 
 
             <div id="delete-game-modal" class="modal" hidden>
