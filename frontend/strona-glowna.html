@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,9 @@
     <link rel="stylesheet" href="styl-glownej.css">
 </head>
 <script src="app.js" defer></script>
+
 <body>
-    <div class="app">  
+    <div class="app">
         <header class="topbar">
             <div class="search-area">
                 <select id="sort">
@@ -16,11 +18,7 @@
                     <option value="desc">alfabetycznie (Z-A)</option>
                 </select>
 
-                <input
-                    type="text"
-                    id="search"
-                    placeholder="wyszukaj grę"
-                >
+                <input type="text" id="search" placeholder="wyszukaj grę">
 
                 <button class="search-button" id="search-button"> </button>
             </div>
@@ -32,7 +30,7 @@
         <main class="games-container" id="games-list">
 
         </main>
-                <footer class="bottom-bar">
+        <footer class="bottom-bar">
             <button class="add-game" id="open-add-game">
                 <span>⊕</span> Dodaj grę
             </button>
@@ -99,15 +97,17 @@
 </div>
 
 
-            <div id="delete-game-modal" class="modal" hidden>
-                <div class="modal-content">
-                    <h2>Czy na pewno chcesz usunąć tę grę?</h2>
+        <div id="delete-game-modal" class="modal" hidden>
+            <div class="modal-content">
+                <h2>Czy na pewno chcesz usunąć tę grę?</h2>
 
-                    <button id="confirm-delete-game">Tak</button>
-                    <button id="cancel-delete-game">Anuluj</button>
-                </div>
+                <button id="confirm-delete-game">Tak</button>
+                <button id="cancel-delete-game">Anuluj</button>
             </div>
+        </div>
 
     </div>
+    <button id="logout">Wyloguj</button>
 </body>
+
 </html>

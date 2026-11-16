@@ -7,6 +7,7 @@
     <title>Rejestrowanie</title>
     <link rel="stylesheet" href="styl-rejestracja.css">
 </head>
+<script src="rejestracja.js" defer></script>
 <body>
 
     <main class="strona">
@@ -19,9 +20,9 @@
 
                 <h1>REJESTRACJA</h1>
 
-                <form>
-                    <label for="login">Nazwa Użytkownika</label>
-                    <input type="text" id="login" name="login">
+                <form id="register-form">
+                    <label for="nazwa">Nazwa Użytkownika</label>
+                    <input type="text" id="nazwa" name="nazwa">
 
                     <label for="email">Email</label>
                     <input type="text" id="email" name="email">
@@ -31,6 +32,8 @@
 
                     <label for="powtorzHaslo">Hasło</label>
                     <input type="password" id="powtorzHaslo" name="powtorzHaslo">
+
+                    <p id="blad" style="color: #ff6b6b; font-size: 13px;"></p>
 
                     <button type="submit">Utwórz konto</button>
                 </form>
@@ -42,7 +45,7 @@
 
         <footer>
             <p>Masz juz konto?</p>
-            <a href="#" class="rejestracja">Zaloguj sie</a>
+            <a href="../frontend/logowanie.html" class="rejestracja">Zaloguj sie</a>
         </footer>
 
     </main>

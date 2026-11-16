@@ -4,6 +4,26 @@
 // ============================================================
 const API = "http://127.0.0.1:8000";
 
+function token() {
+    return localStorage.getItem("token");
+}
+
+async function apiFetch(sciezka, opcje = {}) {
+    const odp = await fetch(`${API}${sciezka}`, {
+        ...opcje,
+        headers: { ...(opcje.headers || {}), "Authorization": `Bearer ${token()}` },
+    });
+    if (odp.status === 401 || odp.status === 403) {
+        localStorage.removeItem("token");
+        window.location.href = "logowanie.html";
+    }
+    return odp;
+}
+
+if (!token()) {
+    window.location.href = "logowanie.html";
+}
+
 // lista gier, wyszukiwanie i sortowanie
 const lista = document.getElementById("games-list");
 const poleSzukaj = document.getElementById("search");
@@ -51,9 +71,10 @@ function zamykajPrzyKlikniecieWTlo(modal, poZamknieciu) {
 // ============================================================
 async function wczytajGry() {
     try {
-        const odpowiedz = await fetch(
-            `${API}/gry?search=${encodeURIComponent(poleSzukaj.value)}&sort=${sortowanie.value}`
+        const odpowiedz = await apiFetch(
+            `/gry?search=${encodeURIComponent(poleSzukaj.value)}&sort=${sortowanie.value}`
         );
+        if (!odpowiedz.ok) return;
         const gry = await odpowiedz.json();
 
         lista.innerHTML = "";
@@ -124,30 +145,6 @@ async function wczytajOpis(appId, opisEl) {
         console.error("Opis ze Steama:", blad);
     }
 }
-
-// Opis i oceny ze Steama dopisują się do karty, gdy tylko backend odpowie.
-async function wczytajSzczegoly(appId, opisEl, steamEl, metaEl) {
-    try {
-        const odp = await fetch(`${API}/steam/details/${appId}`);
-        if (!odp.ok) throw new Error("blad");
-        const dane = await odp.json();
-
-        opisEl.textContent = dane.opis || "";
-
-        if (dane.steam_ocena) {
-            steamEl.textContent = `Steam: ${TLUMACZENIA[dane.steam_ocena] || dane.steam_ocena}`;
-            if (dane.steam_ocena.includes("Positive")) steamEl.classList.add("positive");
-            else if (dane.steam_ocena.includes("Negative")) steamEl.classList.add("negative");
-            else steamEl.classList.add("mixed");
-        }
-        if (dane.metacritic) {
-            metaEl.textContent = `Metacritic: ${dane.metacritic}`;
-        }
-    } catch (blad) {
-        console.error("Szczegóły ze Steama:", blad);
-    }
-}
-
 
 // ============================================================
 // WYSZUKIWANIE I SORTOWANIE
@@ -238,11 +235,15 @@ async function dodajGre() {
         dane.image = wybranaGra.image;
     }
 
-    await fetch(`${API}/gry`, {
+    const odp = await apiFetch("/gry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dane),
     });
+    if (!odp.ok) {
+        alert("Nie udało się dodać gry.");
+        return;
+    }
     ukryjModal(modalDodaj);
     wczytajGry();
 }
@@ -326,7 +327,8 @@ document.getElementById("cancel-delete-game").addEventListener("click", () => {
 document.getElementById("confirm-delete-game").addEventListener("click", async () => {
     if (graDoUsuniecia === null) return;
 
-    await fetch(`${API}/gry/${graDoUsuniecia}`, { method: "DELETE" });
+    const odp = await apiFetch(`/gry/${graDoUsuniecia}`, { method: "DELETE" });
+    if (!odp.ok) alert("Nie udało się usunąć gry.");
 
     ukryjModal(modalUsun);
     graDoUsuniecia = null;
@@ -337,6 +339,10 @@ zamykajPrzyKlikniecieWTlo(modalUsun, () => {
     graDoUsuniecia = null;
 });
 
+document.getElementById("logout").addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location.href = "logowanie.html";
+});
 
 // ============================================================
 // START

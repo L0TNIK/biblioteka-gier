@@ -1,5 +1,5 @@
 #jak schemat zwaliduje informacje to daje je do modelu
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from database import Base
 
 class Game(Base):
