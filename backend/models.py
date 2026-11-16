@@ -10,3 +10,4 @@ class Game(Base):
     ocena = Column(Integer)
     steam_appid = Column(Integer)
     image = Column(String)
+    gatunek = Column(String)
