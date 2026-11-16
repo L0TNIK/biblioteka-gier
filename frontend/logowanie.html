@@ -7,6 +7,7 @@
     <title>Logowanie</title>
     <link rel="stylesheet" href="styl-logowania.css">
 </head>
+<script src="logowanie.js" defer></script>
 <body>
 
     <main class="strona">
@@ -19,9 +20,10 @@
 
                 <h1>LOGOWANIE</h1>
 
-                <form>
-                    <label for="login">Nazwa Użytkownika</label>
-                    <input type="text" id="login" name="login">
+                <form id="login-form">
+                    <p id="blad" style="color: #ff6b6b; font-size: 13px;"></p>
+                    <label for="nazwa">Nazwa Użytkownika</label>
+                    <input type="text" id="nazwa" name="nazwa">
 
                     <label for="haslo">Hasło</label>
                     <input type="password" id="haslo" name="haslo">
@@ -42,7 +44,7 @@
 
         <footer>
             <p>Nie masz konta?</p>
-            <a href="#" class="rejestracja">Utwórz konto</a>
+            <a href="../frontend/rejestracja.html" class="rejestracja">Utwórz konto</a>
         </footer>
 
     </main>
