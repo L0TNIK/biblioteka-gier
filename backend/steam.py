@@ -21,9 +21,10 @@ def SearchSteam(term):
 _cache = {}
 
 def GetSteamDetails(appId):
-    def GetSteamDetaild(appId):
+    def GetSteamDetails(appId):
         if appId in _cache:
             return _cache[appId]
+
     resp = requests.get(
         "https://store.steampowered.com/api/appdetails",
         params={"appids": appId, "cc": "pl", "l": "polish"},

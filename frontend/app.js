@@ -273,28 +273,23 @@ async function zapiszEdycje() {
     if (graDoEdycji === null) return;
 
     const dane = {
-        gatunek: poleEdytujGatunek.value
+        tytul: graDoEdycji.tytul,
+        ocena: graDoEdycji.ocena,
+        gatunek: poleEdytujGatunek.value || null,
     };
 
-    try {
-        const odp = await fetch(`${API}/gry/${graDoEdycji.id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(dane)
-        });
-
-        if (!odp.ok) throw new Error("Nie udało się edytować gry");
-
-        ukryjModal(modalEdytuj);
-        graDoEdycji = null;
-        wczytajGry();
-
-    } catch (blad) {
-        console.error(blad);
+    const odp = await apiFetch(`/gry/${graDoEdycji.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dane),
+    });
+    if (!odp.ok) {
         alert("Nie udało się zapisać zmian.");
+        return;
     }
+    ukryjModal(modalEdytuj);
+    graDoEdycji = null;
+    wczytajGry();
 }
 
 document.getElementById("cancel-edit-game").addEventListener("click", () => {
