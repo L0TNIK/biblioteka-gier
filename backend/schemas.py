@@ -7,6 +7,7 @@ class GameCreate(BaseModel):
     ocena: int | None = None
     steam_appid: int | None = None
     image: str | None = None
+    gatunek: str | None = Field(default=None, max_length=30)
 
 class GameOut(GameCreate):
     id: int
