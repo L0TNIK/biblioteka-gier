@@ -38,6 +38,7 @@ def CreateGame(db, game, userId):
         steam_appid=game.steam_appid,
         image=game.image,
         ocena=game.ocena,
+        gatunek=game.gatunek,
         user_id=userId,
     )
     db.add(NewGame)
@@ -51,6 +52,7 @@ def UpdateGame(db, gameId, game, userId):
         return None
     dbGame.tytul = game.tytul
     dbGame.ocena = game.ocena
+    dbGame.gatunek = game.gatunek
     db.commit()
     db.refresh(dbGame)
     return dbGame
