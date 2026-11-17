@@ -29,6 +29,7 @@ const lista = document.getElementById("games-list");
 const poleSzukaj = document.getElementById("search");
 const przyciskSzukaj = document.getElementById("search-button");
 const sortowanie = document.getElementById("sort");
+const filtrGatunku = document.getElementById("genre-filter");
 
 // okienko dodawania
 const modalDodaj = document.getElementById("add-game-modal");
@@ -70,15 +71,27 @@ function zamykajPrzyKlikniecieWTlo(modal, poZamknieciu) {
 // LISTA GIER
 // ============================================================
 async function wczytajGry() {
+   
     try {
         const odpowiedz = await apiFetch(
             `/gry?search=${encodeURIComponent(poleSzukaj.value)}&sort=${sortowanie.value}`
         );
+
         if (!odpowiedz.ok) return;
+
         const gry = await odpowiedz.json();
 
+        let przefiltrowaneGry = gry;
+
+        if (filtrGatunku.value !== "") {
+            przefiltrowaneGry = gry.filter(gra =>
+                gra.gatunek === filtrGatunku.value
+            );
+        }
+
         lista.innerHTML = "";
-        for (const gra of gry) {
+
+        for (const gra of przefiltrowaneGry) {
             lista.appendChild(stworzKarte(gra));
         }
     }
@@ -87,6 +100,7 @@ async function wczytajGry() {
         lista.textContent = "Nie mozna polaczyc sie z serwerem";
     }
 }
+
 
 function stworzKarte(gra) {
     const karta = document.createElement("article");
@@ -154,6 +168,7 @@ poleSzukaj.addEventListener("keydown", (e) => {
     if (e.key === "Enter") wczytajGry();
 });
 sortowanie.addEventListener("change", wczytajGry);
+filtrGatunku.addEventListener("change", wczytajGry);
 
 
 // ============================================================
