@@ -8,7 +8,7 @@ body {
     min-height: 100vh;
     font-family: Arial, sans-serif;
     color: white;
-    background-image: url("./zdjecia/tlo-do-rejestracji.png");
+    background-image: url("./zdjecia/tlo-do-logowania.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
