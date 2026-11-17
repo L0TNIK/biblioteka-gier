@@ -122,11 +122,23 @@ function stworzKarte(gra) {
     opis.className = "game-description";
     const mojaOcena = document.createElement("p");
     mojaOcena.className = "game-rating";
-    mojaOcena.textContent = gra.ocena ? `Moja ocena: ${gra.ocena}/10` : "Brak oceny";
+    if (gra.ocena) {
+        let klasaOceny = "ocena-srednia";
+        if (gra.ocena >= 8) klasaOceny = "ocena-wysoka";
+        else if (gra.ocena <= 4) klasaOceny = "ocena-niska";
+
+        mojaOcena.innerHTML = `Moja ocena: <span class="ocena-wartosc ${klasaOceny}">${gra.ocena}/10</span>`;
+    } else {
+        mojaOcena.innerHTML = `<span class="brak-danych">Brak oceny</span>`;
+    }
 
     const gatunek = document.createElement("p");
     gatunek.className = "game-genre";
-    gatunek.textContent = gra.gatunek || "Brak gatunku";
+    if (gra.gatunek) {
+        gatunek.innerHTML = `Gatunek: <span class="gatunek-tag">${gra.gatunek}</span>`;
+    } else {
+        gatunek.innerHTML = `<span class="brak-danych">Brak gatunku</span>`;
+    }
 
     info.append(tytul, opis, mojaOcena, gatunek);
 
