@@ -112,7 +112,7 @@ function stworzKarte(gra) {
 
     const gatunek = document.createElement("p");
     gatunek.className = "game-genre";
-    gatunek.textContent = gra.gatunek || "Brak gatunku";
+    gatunek.textContent = gra.gatunek ? `Gatunek: ${gra.gatunek}` : "Brak gatunku";
 
     info.append(tytul, opis, mojaOcena, gatunek);
 
