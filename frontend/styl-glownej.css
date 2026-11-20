@@ -462,3 +462,20 @@ body {
     font-style: italic;
     font-size: 12px;
 }
+
+.favorite-button {
+    font-size: 25px !important;
+    color: #718096 !important;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.favorite-button:hover {
+    color: #facc15 !important;
+}
+
+.favorite-button.active {
+    color: #facc15 !important;
+}
