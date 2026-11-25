@@ -1,8 +1,8 @@
-
 from sqlalchemy import Column, Integer, String, ForeignKey
 from database import Base
 
 
+# opisuje tabele users w bazie (dane logowania kazdego uzytkownika)
 class User(Base):
     __tablename__ = "users"
 
@@ -12,11 +12,12 @@ class User(Base):
     haslo_hash = Column(String, nullable=False)
 
 
+# opisuje tabele gry w bazie (biblioteka gier przypisana do usera)
 class Game(Base):
     __tablename__ = "gry"
 
     id = Column(Integer, primary_key=True)
-    tytul = Column(String)
+    tytul = Column(String, nullable=False)
     steam_appid = Column(Integer)
     image = Column(String)
     ocena = Column(Integer)

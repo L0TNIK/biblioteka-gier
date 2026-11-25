@@ -1,5 +1,6 @@
 const API = "http://127.0.0.1:8000";
 
+// sprawdza czy hasla sie zgadzaja, zaklada konto przez api i przenosi na strone glowna
 document.getElementById("register-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const blad = document.getElementById("blad");
@@ -16,7 +17,7 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
         const odp = await fetch(`${API}/rejestracja`, {
             method: "POST",
             headers: { 
-                "Content-Type": "application/json" // Bardzo ważne dla FastAPI!
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 nazwa: document.getElementById("nazwa").value.trim(),

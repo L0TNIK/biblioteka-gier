@@ -1,14 +1,15 @@
-
 // ============================================================
 // USTAWIENIA I ELEMENTY STRONY
 // ============================================================
 
 const API = "http://127.0.0.1:8000";
 
+// wyciaga token logowania z pamieci przegladarki
 function token() {
     return localStorage.getItem("token");
 }
 
+// wysyla zapytania do backendu z doklejonym tokenem i wylogowuje gdy token wygasnie
 async function apiFetch(sciezka, opcje = {}) {
     const odp = await fetch(`${API}${sciezka}`, {
         ...opcje,
@@ -59,6 +60,7 @@ const modalUsun = document.getElementById("delete-game-modal");
 
 let ulubione = JSON.parse(localStorage.getItem("ulubione")) || [];
 
+// zapisuje liste ulubionych gier w pamieci przegladarki
 function zapiszUlubione() {
     localStorage.setItem("ulubione", JSON.stringify(ulubione));
 }
@@ -67,14 +69,17 @@ function zapiszUlubione() {
 // POMOCNICZE: OKIENKA (MODALE)
 // ============================================================
 
+// pokazuje wybrane okienko na ekranie
 function pokazModal(modal) {
     modal.style.display = "flex";
 }
 
+// chowa wybrane okienko
 function ukryjModal(modal) {
     modal.style.display = "none";
 }
 
+// zamyka okienko gdy klikniesz w ciemne tlo obok niego
 function zamykajPrzyKlikniecieWTlo(modal, poZamknieciu) {
     modal.addEventListener("click", (e) => {
         if (e.target === modal) {
@@ -88,6 +93,7 @@ function zamykajPrzyKlikniecieWTlo(modal, poZamknieciu) {
 // LISTA GIER
 // ============================================================
 
+// pobiera gry z backendu, filtruje je i wrzuca karty na strone
 async function wczytajGry() {
     try {
         const odpowiedz = await apiFetch(
@@ -130,6 +136,7 @@ async function wczytajGry() {
 // TWORZENIE KARTY GRY
 // ============================================================
 
+// buduje gotowy kafelek html dla jednej gry ze wszystkimi przyciskami
 function stworzKarte(gra) {
     const karta = document.createElement("article");
     karta.className = "game-card";
@@ -207,6 +214,7 @@ function stworzKarte(gra) {
     const ulubiona = document.createElement("button");
     ulubiona.className = "favorite-button";
 
+    // zmienia wyglad gwiazdki w zaleznosci od tego czy gra jest w ulubionych
     function aktualizujGwiazdke() {
         if (ulubione.includes(gra.id)) {
             ulubiona.textContent = "★";
@@ -261,6 +269,7 @@ function stworzKarte(gra) {
 // OPIS GRY ZE STEAMA
 // ============================================================
 
+// dociaga opis gry ze steama w tle i wkleja go do karty
 async function wczytajOpis(appId, opisEl) {
     try {
         const odp = await fetch(`${API}/steam/details/${appId}`);
@@ -312,6 +321,7 @@ document.getElementById("cancel-add-game").addEventListener("click", () => {
 
 zamykajPrzyKlikniecieWTlo(modalDodaj);
 
+// szuka gry w sklepie steam i wyswietla podpowiedzi do klikniecia
 async function szukajWSteamie() {
     const fraza = poleNazwa.value.trim();
 
@@ -359,6 +369,7 @@ async function szukajWSteamie() {
     }
 }
 
+// sprawdza formularz i wysyla nowa gre do zapisania w bazie
 async function dodajGre() {
     const tytul = poleNazwa.value.trim();
 
@@ -378,7 +389,7 @@ async function dodajGre() {
     const dane = {
         tytul: tytul,
         ocena: ocena,
-        gatunek: poleGatunek.value,
+        gatunek: poleGatunek.value || null,
         status: poleStatus.value
     };
 
@@ -420,6 +431,7 @@ document.getElementById("confirm-add-game").addEventListener("click", dodajGre);
 
 let graDoEdycji = null;
 
+// otwiera okienko edycji i wpisuje do niego obecne dane gry
 function edytujGre(gra) {
     graDoEdycji = gra;
 
@@ -429,6 +441,7 @@ function edytujGre(gra) {
     pokazModal(modalEdytuj);
 }
 
+// wysyla zmienione dane gry na serwer i odswieza liste
 async function zapiszEdycje() {
     if (graDoEdycji === null) return;
 
@@ -473,6 +486,7 @@ zamykajPrzyKlikniecieWTlo(modalEdytuj, () => {
 
 let graDoUsuniecia = null;
 
+// otwiera okienko potwierdzenia usuniecia wybranej gry
 function usunGre(id) {
     graDoUsuniecia = id;
     pokazModal(modalUsun);
@@ -512,6 +526,7 @@ zamykajPrzyKlikniecieWTlo(modalUsun, () => {
 const przyciskProfilu = document.getElementById("profile-button");
 const menuProfilu = document.getElementById("profile-menu");
 
+// pokazuje albo chowa rozwijane menu profilu w rogu ekranu
 function pokazMenuProfilu(pokaz) {
     menuProfilu.hidden = !pokaz;
     przyciskProfilu.setAttribute("aria-expanded", String(pokaz));
@@ -539,7 +554,7 @@ document.getElementById("logout").addEventListener("click", () => {
     window.location.href = "logowanie.html";
 });
 
-// nazwa użytkownika w menu
+// pobiera nick zalogowanego usera i wpisuje go do menu profilu
 async function wczytajNazweUzytkownika() {
     try {
         const odp = await apiFetch("/ja");

@@ -1,13 +1,16 @@
-import requests, json
+import requests
+import json
 
+
+# wyszukuje gry w sklepie steam po wpisanej nazwie i zwraca podstawowe info
 def SearchSteam(term):
-    responce = requests.get(
+    response = requests.get(
         "https://store.steampowered.com/api/storesearch/",
         params={"term": term, "cc": "pl", "l": "polish"},
         timeout=10,
     )
-    responce.raise_for_status()
-    data = responce.json()
+    response.raise_for_status()
+    data = response.json()
 
     results = []
     for item in data.get("items", []):
@@ -18,12 +21,14 @@ def SearchSteam(term):
         })
     return results
 
+
 _cache = {}
 
+
+# pobiera opis, ocene metacritic i statystyki recenzji ze steama (z pamiecia podreczna)
 def GetSteamDetails(appId):
-    def GetSteamDetails(appId):
-        if appId in _cache:
-            return _cache[appId]
+    if appId in _cache:
+        return _cache[appId]
 
     resp = requests.get(
         "https://store.steampowered.com/api/appdetails",
@@ -31,7 +36,7 @@ def GetSteamDetails(appId):
         timeout=10,
     )
     resp.raise_for_status()
-    data = resp.json()[str(appId)].get("data", {})
+    data = resp.json().get(str(appId), {}).get("data", {})
 
     summary = {}
     try:

@@ -16,21 +16,29 @@ if not SECRET_KEY:
     raise RuntimeError("Brak SECRET_KEY w pliku .env")
 
 ALGORITHM = "HS256"
-WAZNOSC_MINUT = 60 * 24
+WAZNOSC_MINUT = 60 * 24  # 24 godziny
 
 hasher = PasswordHash.recommended()
 bearer = HTTPBearer()
 
-def hashuj_haslo(haslo):
+
+# szyfruje haslo zeby nikt go nie podejrzal w bazie
+def hashuj_haslo(haslo: str) -> str:
     return hasher.hash(haslo)
 
-def sprawdz_haslo(haslo, haslo_hash):
-    return hasher.verify(haslo,haslo_hash)
 
-def stworz_token(user_id):
+# sprawdza czy wpisane haslo pasuje do tego w bazie
+def sprawdz_haslo(haslo: str, haslo_hash: str) -> bool:
+    return hasher.verify(haslo, haslo_hash)
+
+
+# robi klucz (token) dla usera zeby byl zalogowany przez 24h
+def stworz_token(user_id: int) -> str:
     wygasa = datetime.now(timezone.utc) + timedelta(minutes=WAZNOSC_MINUT)
     return jwt.encode({"sub": str(user_id), "exp": wygasa}, SECRET_KEY, algorithm=ALGORITHM)
 
+
+# sprawdza token z zapytania i wyciaga z bazy kto jest zalogowany
 def get_current_user(dane: HTTPAuthorizationCredentials = Depends(bearer), db=Depends(get_db)):
     blad = HTTPException(status_code=401, detail="Zaloguj się ponownie")
     try:

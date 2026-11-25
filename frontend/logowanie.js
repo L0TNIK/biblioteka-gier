@@ -1,5 +1,6 @@
 const API = "http://127.0.0.1:8000";
 
+// przechwytuje wyslanie formularza logowania, pobiera token i przenosi na strone glowna
 document.getElementById("login-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const blad = document.getElementById("blad");
