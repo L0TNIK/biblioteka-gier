@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -10,8 +11,6 @@ body {
     color: #d5dce5;
 }
 
-
-
 .app {
     width: 100%;
     height: 100vh;
@@ -20,8 +19,6 @@ body {
     flex-direction: column;
     overflow: hidden;
 }
-
-
 
 .topbar {
     min-height: 70px;
@@ -99,7 +96,7 @@ body {
     border: 2px solid #454c56;
 }
 
-
+/* Lista gier */
 
 .games-container {
     flex: 1;
@@ -125,14 +122,12 @@ body {
 
 /* Miniaturka */
 
-
 .game-image img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     background: #0e1722;
 }
-
 
 /* Informacje */
 
@@ -142,7 +137,6 @@ body {
     padding: 14px 16px;
     overflow: hidden;
 }
-
 
 .game-info p {
     font-size: 13px;
@@ -221,6 +215,7 @@ body {
     border-radius: 5px;
 }
 
+/* Dodatkowe elementy karty */
 
 .game-side {
     flex-shrink: 0;
@@ -248,13 +243,14 @@ body {
     flex-shrink: 0;
 }
 
+/* Okienka modalne */
+
 .modal {
     display: none;
     position: fixed;
     z-index: 1000;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
-
     justify-content: center;
     align-items: center;
 }
@@ -297,6 +293,8 @@ body {
     display: none;
 }
 
+/* Wyniki wyszukiwania Steam */
+
 #steam-results {
     max-height: 180px;
     overflow-y: auto;
@@ -313,6 +311,8 @@ body {
     background: #2a475e;
 }
 
+/* Wyszukiwanie Steam w okienku */
+
 .modal-search {
     display: flex;
     gap: 2px;
@@ -320,25 +320,21 @@ body {
 
 .modal-search input {
     height: 38px;
-    /* Nadaj stałą wysokość inputowi */
     padding: 0 10px;
     margin-bottom: 15px;
-    /* Usuń stary margines, żeby flexbox dobrze wyrównał elementy */
     box-sizing: border-box;
-    /* Zabezpieczenie przed doliczaniem paddingu do szerokości/wysokości */
 }
 
 #search-steam {
     height: 38px;
-    /* Musi być dokładnie taka sama jak w input! */
     padding: 0 12px;
-    /* Dopasuj padding boczny, żeby ikona była ładnie wyśrodkowana */
     box-sizing: border-box;
-    /* Kluczowe: uwzględnia padding i ewentualne obramowanie w wysokości */
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+/* Scrollbar Steam */
 
 #steam-results::-webkit-scrollbar {
     width: 9px;
@@ -358,6 +354,8 @@ body {
     background: #58bce8;
 }
 
+/* Usuwanie gry */
+
 .game-actions button:last-child:hover {
     color: #ff4444;
 }
@@ -366,6 +364,8 @@ body {
     background-color: #d93030;
     color: white;
 }
+
+/* Opis gry */
 
 .game-description {
     margin: 6px 0;
@@ -378,6 +378,8 @@ body {
     overflow: hidden;
 }
 
+/* Ocena gry */
+
 .game-rating {
     margin-top: 8px;
     font-size: 13px;
@@ -388,10 +390,20 @@ body {
 .metacritic-review {
     font-size: 13px;
 }
-.steam-review.positive { color: #66c0f4; }
-.steam-review.mixed { color: #b9a074; }
-.steam-review.negative { color: #a74b25; }
 
+.steam-review.positive {
+    color: #66c0f4;
+}
+
+.steam-review.mixed {
+    color: #b9a074;
+}
+
+.steam-review.negative {
+    color: #a74b25;
+}
+
+/* Pola w okienku dodawania */
 
 #add-game-modal .modal-content input,
 #add-game-modal .modal-content select {
@@ -405,8 +417,8 @@ body {
     border-radius: 4px;
 }
 
-
-#game-genre {
+#game-genre,
+#game-status {
     cursor: pointer;
 }
 
@@ -422,22 +434,26 @@ body {
     text-align: center;
 }
 
+/* Ocena - kolory */
+
 .ocena-wartosc {
     font-weight: 700;
     font-size: 14px;
 }
 
 .ocena-wysoka {
-    color: #a4d007; /* limonkowa zieleń w stylu Steam */
+    color: #a4d007;
 }
 
 .ocena-srednia {
-    color: #f5c518; /* złoty/bursztynowy */
+    color: #f5c518;
 }
 
 .ocena-niska {
-    color: #f87171; /* koralowa czerwień */
+    color: #f87171;
 }
+
+/* Gatunek */
 
 .game-genre {
     margin-top: 6px;
@@ -463,6 +479,8 @@ body {
     font-size: 12px;
 }
 
+/* Ulubione */
+
 .favorite-button {
     font-size: 25px !important;
     color: #718096 !important;
@@ -478,4 +496,64 @@ body {
 
 .favorite-button.active {
     color: #facc15 !important;
+}
+
+/* ==================================================
+   STATUS GRY
+   ================================================== */
+
+.status-gry {
+    display: inline-block;
+    width: fit-content;
+    padding: 4px 9px;
+    margin-top: 6px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Do ogrania - niebieski */
+
+.status-do-ograna {
+    color: #66c0f4;
+    background-color: rgba(102, 192, 244, 0.15);
+    border: 1px solid rgba(102, 192, 244, 0.4);
+}
+
+/* W trakcie - żółty */
+
+.status-w-trakcie {
+    color: #f5c518;
+    background-color: rgba(245, 197, 24, 0.15);
+    border: 1px solid rgba(245, 197, 24, 0.4);
+}
+
+/* Ukończona - zielony */
+
+.status-ukonczona {
+    color: #a4d007;
+    background-color: rgba(164, 208, 7, 0.15);
+    border: 1px solid rgba(164, 208, 7, 0.4);
+}
+
+#edit-game-modal .modal-content select {
+    width: 100%;
+    height: 38px;
+    padding: 0 10px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+    background-color: #2A475E;
+    color: #C7D5E0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#edit-game-modal .modal-content label {
+    display: block;
+    text-align: left;
+    font-size: 13px;
+    margin-top: 5px;
+    color: #C7D5E0;
 }
