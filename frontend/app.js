@@ -507,13 +507,50 @@ zamykajPrzyKlikniecieWTlo(modalUsun, () => {
 });
 
 // ============================================================
-// WYLOGOWANIE
+// MENU PROFILU
 // ============================================================
+const przyciskProfilu = document.getElementById("profile-button");
+const menuProfilu = document.getElementById("profile-menu");
+
+function pokazMenuProfilu(pokaz) {
+    menuProfilu.hidden = !pokaz;
+    przyciskProfilu.setAttribute("aria-expanded", String(pokaz));
+}
+
+// klik w zdjęcie otwiera lub zamyka menu
+przyciskProfilu.addEventListener("click", () => {
+    pokazMenuProfilu(menuProfilu.hidden);
+});
+
+// klik gdziekolwiek poza menu zamyka je
+document.addEventListener("click", (e) => {
+    if (!menuProfilu.contains(e.target) && !przyciskProfilu.contains(e.target)) {
+        pokazMenuProfilu(false);
+    }
+});
+
+// klawisz Esc też zamyka menu
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") pokazMenuProfilu(false);
+});
 
 document.getElementById("logout").addEventListener("click", () => {
     localStorage.removeItem("token");
     window.location.href = "logowanie.html";
 });
+
+// nazwa użytkownika w menu
+async function wczytajNazweUzytkownika() {
+    try {
+        const odp = await apiFetch("/ja");
+        if (!odp.ok) return;
+        const dane = await odp.json();
+        document.getElementById("profile-name").textContent = dane.nazwa;
+    } catch (blad) {
+        console.error(blad);
+    }
+}
+wczytajNazweUzytkownika();
 
 // ============================================================
 // START
