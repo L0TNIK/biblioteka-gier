@@ -479,3 +479,70 @@ body {
 .favorite-button.active {
     color: #facc15 !important;
 }
+
+.profile {
+    position: relative;
+}
+
+.profile-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.profile-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 260px;
+    background: #171a22;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+.profile-menu[hidden] {
+    display: none;
+}
+
+.profile-menu-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #c7d5e0;
+}
+
+.profile-menu-user img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-menu hr {
+    border: none;
+    border-top: 1px solid #3a4150;
+    margin: 14px 0;
+}
+
+.profile-menu-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: none;
+    color: #c7d5e0;
+    font-size: 18px;
+    padding: 8px 4px;
+    cursor: pointer;
+}
+
+.profile-menu-item:hover {
+    color: #66c0f4;
+}
