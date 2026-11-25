@@ -20,6 +20,10 @@ app.add_middleware(
 def aga():
     return {"wiadomosc": "aga"}
 
+@app.get("/ja")
+def Me(user=Depends(get_current_user)):
+    return {"nazwa": user.nazwa}
+
 @app.post("/rejestracja", response_model=schemas.Token)
 def Register(dane: schemas.UserCreate, db=Depends(get_db)):
     email = dane.email.strip().lower()
