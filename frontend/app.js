@@ -12,7 +12,10 @@ function token() {
 async function apiFetch(sciezka, opcje = {}) {
     const odp = await fetch(`${API}${sciezka}`, {
         ...opcje,
-        headers: { ...(opcje.headers || {}), "Authorization": `Bearer ${token()}` },
+        headers: {
+            ...(opcje.headers || {}),
+            "Authorization": `Bearer ${token()}`
+        },
     });
 
     if (odp.status === 401 || odp.status === 403) {
@@ -40,10 +43,12 @@ const poleNazwa = document.getElementById("game-name");
 const wynikiSteam = document.getElementById("steam-results");
 const poleOcena = document.getElementById("game-rating");
 const poleGatunek = document.getElementById("game-genre");
+const poleStatus = document.getElementById("game-status");
 
 // okienko edycji
 const modalEdytuj = document.getElementById("edit-game-modal");
 const poleEdytujGatunek = document.getElementById("edit-game-genre");
+const poleEdytujStatus = document.getElementById("edit-game-status");
 
 // okienko usuwania
 const modalUsun = document.getElementById("delete-game-modal");
@@ -70,7 +75,6 @@ function ukryjModal(modal) {
     modal.style.display = "none";
 }
 
-// Kliknięcie w ciemne tło zamyka okienko.
 function zamykajPrzyKlikniecieWTlo(modal, poZamknieciu) {
     modal.addEventListener("click", (e) => {
         if (e.target === modal) {
@@ -85,7 +89,6 @@ function zamykajPrzyKlikniecieWTlo(modal, poZamknieciu) {
 // ============================================================
 
 async function wczytajGry() {
-
     try {
         const odpowiedz = await apiFetch(
             `/gry?search=${encodeURIComponent(poleSzukaj.value)}&sort=${sortowanie.value}`
@@ -103,6 +106,7 @@ async function wczytajGry() {
                 ulubione.includes(gra.id)
             );
         }
+
         // Filtrowanie według gatunku
         else if (filtrGatunku.value !== "") {
             przefiltrowaneGry = gry.filter(gra =>
@@ -122,6 +126,9 @@ async function wczytajGry() {
     }
 }
 
+// ============================================================
+// TWORZENIE KARTY GRY
+// ============================================================
 
 function stworzKarte(gra) {
     const karta = document.createElement("article");
@@ -143,6 +150,22 @@ function stworzKarte(gra) {
     const tytul = document.createElement("h3");
     tytul.textContent = gra.tytul;
 
+    // STATUS GRY
+    const status = document.createElement("span");
+    status.className = "status-gry";
+
+    if (gra.status === "Do ogrania") {
+        status.classList.add("status-do-ograna");
+    }
+    else if (gra.status === "W trakcie") {
+        status.classList.add("status-w-trakcie");
+    }
+    else if (gra.status === "Ukończona") {
+        status.classList.add("status-ukonczona");
+    }
+
+    status.textContent = gra.status || "Brak statusu";
+
     const opis = document.createElement("p");
     opis.className = "game-description";
 
@@ -156,7 +179,8 @@ function stworzKarte(gra) {
         else if (gra.ocena <= 4) klasaOceny = "ocena-niska";
 
         mojaOcena.innerHTML = `Moja ocena: <span class="ocena-wartosc ${klasaOceny}">${gra.ocena}/10</span>`;
-    } else {
+    }
+    else {
         mojaOcena.innerHTML = `<span class="brak-danych">Brak oceny</span>`;
     }
 
@@ -165,11 +189,12 @@ function stworzKarte(gra) {
 
     if (gra.gatunek) {
         gatunek.innerHTML = `Gatunek: <span class="gatunek-tag">${gra.gatunek}</span>`;
-    } else {
+    }
+    else {
         gatunek.innerHTML = `<span class="brak-danych">Brak gatunku</span>`;
     }
 
-    info.append(tytul, opis, mojaOcena, gatunek);
+    info.append(tytul, status, opis, mojaOcena, gatunek);
 
     // Przyciski
     const akcje = document.createElement("div");
@@ -186,7 +211,8 @@ function stworzKarte(gra) {
         if (ulubione.includes(gra.id)) {
             ulubiona.textContent = "★";
             ulubiona.classList.add("active");
-        } else {
+        }
+        else {
             ulubiona.textContent = "☆";
             ulubiona.classList.remove("active");
         }
@@ -195,17 +221,16 @@ function stworzKarte(gra) {
     aktualizujGwiazdke();
 
     ulubiona.addEventListener("click", () => {
-
         if (ulubione.includes(gra.id)) {
             ulubione = ulubione.filter(id => id !== gra.id);
-        } else {
+        }
+        else {
             ulubione.push(gra.id);
         }
 
         zapiszUlubione();
         aktualizujGwiazdke();
 
-        // Odświeżenie listy, jeśli wyświetlane są ulubione
         if (filtrGatunku.value === "ulubione") {
             wczytajGry();
         }
@@ -232,6 +257,9 @@ function stworzKarte(gra) {
     return karta;
 }
 
+// ============================================================
+// OPIS GRY ZE STEAMA
+// ============================================================
 
 async function wczytajOpis(appId, opisEl) {
     try {
@@ -242,7 +270,8 @@ async function wczytajOpis(appId, opisEl) {
         const dane = await odp.json();
         opisEl.textContent = dane.opis || "";
 
-    } catch (blad) {
+    }
+    catch (blad) {
         console.error("Opis ze Steama:", blad);
     }
 }
@@ -264,14 +293,16 @@ filtrGatunku.addEventListener("change", wczytajGry);
 // DODAWANIE GIER
 // ============================================================
 
-let wybranaGra = null;   // gra wybrana ze Steama; null = własna gra
+let wybranaGra = null;
 
 document.getElementById("open-add-game").addEventListener("click", () => {
     poleNazwa.value = "";
     poleOcena.value = "";
     poleGatunek.value = "";
+    poleStatus.value = "Do ogrania";
     wynikiSteam.innerHTML = "";
     wybranaGra = null;
+
     pokazModal(modalDodaj);
 });
 
@@ -322,11 +353,11 @@ async function szukajWSteamie() {
             wynikiSteam.appendChild(wiersz);
         }
 
-    } catch (blad) {
+    }
+    catch (blad) {
         wynikiSteam.textContent = "Steam nie odpowiada. Możesz dodać grę, wpisując samą nazwę.";
     }
 }
-
 
 async function dodajGre() {
     const tytul = poleNazwa.value.trim();
@@ -347,7 +378,8 @@ async function dodajGre() {
     const dane = {
         tytul: tytul,
         ocena: ocena,
-        gatunek: poleGatunek.value
+        gatunek: poleGatunek.value,
+        status: poleStatus.value
     };
 
     if (wybranaGra) {
@@ -390,7 +422,10 @@ let graDoEdycji = null;
 
 function edytujGre(gra) {
     graDoEdycji = gra;
+
     poleEdytujGatunek.value = gra.gatunek || "";
+    poleEdytujStatus.value = gra.status || "Do ogrania";
+
     pokazModal(modalEdytuj);
 }
 
@@ -401,6 +436,7 @@ async function zapiszEdycje() {
         tytul: graDoEdycji.tytul,
         ocena: graDoEdycji.ocena,
         gatunek: poleEdytujGatunek.value || null,
+        status: poleEdytujStatus.value
     };
 
     const odp = await apiFetch(`/gry/${graDoEdycji.id}`, {
@@ -416,6 +452,7 @@ async function zapiszEdycje() {
 
     ukryjModal(modalEdytuj);
     graDoEdycji = null;
+
     wczytajGry();
 }
 
@@ -451,14 +488,17 @@ document.getElementById("confirm-delete-game").addEventListener("click", async (
 
     const odp = await apiFetch(`/gry/${graDoUsuniecia}`, { method: "DELETE" });
 
-    if (!odp.ok) alert("Nie udało się usunąć gry.");
+    if (!odp.ok) {
+        alert("Nie udało się usunąć gry.");
+        return;
+    }
 
-    // Usunięcie gry również z ulubionych
     ulubione = ulubione.filter(id => id !== graDoUsuniecia);
     zapiszUlubione();
 
     ukryjModal(modalUsun);
     graDoUsuniecia = null;
+
     wczytajGry();
 });
 

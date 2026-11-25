@@ -1,3 +1,4 @@
+
 from sqlalchemy import Column, Integer, String, ForeignKey
 from database import Base
 
@@ -20,4 +21,5 @@ class Game(Base):
     image = Column(String)
     ocena = Column(Integer)
     gatunek = Column(String)
+    status = Column(String, default="Do ogrania", nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)

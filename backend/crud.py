@@ -39,6 +39,7 @@ def CreateGame(db, game, userId):
         image=game.image,
         ocena=game.ocena,
         gatunek=game.gatunek,
+        status=game.status,
         user_id=userId,
     )
     db.add(NewGame)
@@ -50,9 +51,12 @@ def UpdateGame(db, gameId, game, userId):
     dbGame = GetGame(db, gameId, userId)
     if dbGame is None:
         return None
+
     dbGame.tytul = game.tytul
     dbGame.ocena = game.ocena
     dbGame.gatunek = game.gatunek
+    dbGame.status = game.status
+
     db.commit()
     db.refresh(dbGame)
     return dbGame

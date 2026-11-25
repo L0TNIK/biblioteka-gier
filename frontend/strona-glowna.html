@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 
@@ -6,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteka gier</title>
     <link rel="stylesheet" href="styl-glownej.css">
+    <script src="app.js" defer></script>
 </head>
-<script src="app.js" defer></script>
 
 <body>
     <div class="app">
@@ -37,7 +38,7 @@
 
                 <input type="text" id="search" placeholder="wyszukaj grę">
 
-                <button class="search-button" id="search-button"> </button>
+                <button class="search-button" id="search-button"></button>
             </div>
 
             <div class="profile">
@@ -63,15 +64,17 @@
                 </div>
             </div>
         </header>
-        <main class="games-container" id="games-list">
 
+        <main class="games-container" id="games-list">
         </main>
+
         <footer class="bottom-bar">
             <button class="add-game" id="open-add-game">
                 <span>⊕</span> Dodaj grę
             </button>
         </footer>
 
+        <!-- DODAWANIE GRY -->
         <div id="add-game-modal" class="modal" hidden>
             <div class="modal-content">
                 <h2>Nazwa gry</h2>
@@ -82,7 +85,9 @@
                 </div>
 
                 <div id="steam-results"></div>
-                <input type="number" id="game-rating" min="1" max="10" placeholder="Twoja ocena (1-10), opcjonalnie">
+
+                <input type="number" id="game-rating" min="1" max="10"
+                    placeholder="Twoja ocena (1-10), opcjonalnie">
 
                 <select id="game-genre">
                     <option value="">Wybierz gatunek</option>
@@ -100,39 +105,54 @@
                     <option value="Horror">Horror</option>
                 </select>
 
+                <select id="game-status">
+                    <option value="Do ogrania">Do ogrania</option>
+                    <option value="W trakcie">W trakcie</option>
+                    <option value="Ukończona">Ukończona</option>
+                </select>
+
                 <button id="confirm-add-game">Dodaj grę</button>
                 <button id="cancel-add-game">Anuluj</button>
             </div>
         </div>
 
-            <div id="edit-game-modal" class="modal" hidden>
-    <div class="modal-content">
-        <h2>Edytuj grę</h2>
+        <!-- EDYTOWANIE GRY -->
+        <div id="edit-game-modal" class="modal" hidden>
+            <div class="modal-content">
+                <h2>Edytuj grę</h2>
 
-        <label for="edit-game-genre">Gatunek gry:</label>
+                <label for="edit-game-genre">Gatunek gry:</label>
 
-        <select id="edit-game-genre">
-            <option value="">Brak gatunku</option>
-            <option value="Akcja">Akcja</option>
-            <option value="Przygodowe">Przygodowe</option>
-            <option value="RPG">RPG</option>
-            <option value="MMORPG">MMORPG</option>
-            <option value="Soulslike">Soulslike</option>
-            <option value="FPS">Strzelanki (FPS)</option>
-            <option value="TPS">Strzelanki (TPS)</option>
-            <option value="Strategie">Strategie</option>
-            <option value="Symulacje">Symulacje</option>
-            <option value="Wyścigowe">Wyścigowe</option>
-            <option value="Sportowe">Sportowe</option>
-            <option value="Horror">Horror</option>
-        </select>
+                <select id="edit-game-genre">
+                    <option value="">Brak gatunku</option>
+                    <option value="Akcja">Akcja</option>
+                    <option value="Przygodowe">Przygodowe</option>
+                    <option value="RPG">RPG</option>
+                    <option value="MMORPG">MMORPG</option>
+                    <option value="Soulslike">Soulslike</option>
+                    <option value="FPS">Strzelanki (FPS)</option>
+                    <option value="TPS">Strzelanki (TPS)</option>
+                    <option value="Strategie">Strategie</option>
+                    <option value="Symulacje">Symulacje</option>
+                    <option value="Wyścigowe">Wyścigowe</option>
+                    <option value="Sportowe">Sportowe</option>
+                    <option value="Horror">Horror</option>
+                </select>
 
-        <button id="confirm-edit-game">Zapisz zmiany</button>
-        <button id="cancel-edit-game">Anuluj</button>
-    </div>
-</div>
+                <label for="edit-game-status">Status gry:</label>
 
+                <select id="edit-game-status">
+                    <option value="Do ogrania">Do ogrania</option>
+                    <option value="W trakcie">W trakcie</option>
+                    <option value="Ukończona">Ukończona</option>
+                </select>
 
+                <button id="confirm-edit-game">Zapisz zmiany</button>
+                <button id="cancel-edit-game">Anuluj</button>
+            </div>
+        </div>
+
+        <!-- USUWANIE GRY -->
         <div id="delete-game-modal" class="modal" hidden>
             <div class="modal-content">
                 <h2>Czy na pewno chcesz usunąć tę grę?</h2>
@@ -143,6 +163,8 @@
         </div>
 
     </div>
+
+    <button id="logout">Wyloguj</button>
 </body>
 
 </html>
